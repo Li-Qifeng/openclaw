@@ -25,9 +25,19 @@ android {
     versionName = "2026.1.30"
   }
 
+  signingConfigs {
+    create("release") {
+      storeFile = file("../my-release-key.jks")
+      storePassword = System.getenv("SIGNING_KEYSTORE_PASSWORD")
+      keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+      keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+    }
+  }
+
   buildTypes {
     release {
       isMinifyEnabled = false
+      signingConfig = signingConfigs.getByName("release")
     }
   }
 
